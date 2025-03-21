@@ -56,7 +56,7 @@ def main():
 
         # Download the PDF,extrract, add, insert into database
         response = requests.get(pdf_url)
-        pdf_path = 'temp.pdf'
+        pdf_path = 'alem.pdf'
         with open(pdf_path, 'wb') as f:
             f.write(response.content)
 
