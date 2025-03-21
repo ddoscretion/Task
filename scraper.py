@@ -7,6 +7,9 @@
 #I have limited download of PDF files to 5, but if we have everything in database we can use 
 # LIMIT for limiting number of records
 
+#Also, we have approached this task to find settlement just in PDF file, but we could extract that information from notes (column)
+#But not every record have it, so I choose not to complicate and just to search PDF and extract
+
 import requests
 from bs4 import BeautifulSoup
 import pdfplumber
@@ -39,6 +42,7 @@ def main():
             facility_name = columns[5].text.strip()  # Defendant
             document_date = columns[2].text.strip()  # Extract document date
             pdf_link = columns[0].find('a')['href']  # hyperlink-link
+            
             year = int(document_date.split('/')[-1])  # Extract the year, just the year
 
             # Add the record to the list
@@ -63,7 +67,6 @@ def main():
         settlement = extract_settlement_from_pdf(pdf_path)
         record['Settlement'] = settlement
         insert_into_db(record)
-        print(f"Inserted record: {record}")
 
     driver.quit()
 
